@@ -48,7 +48,9 @@ class _FormScreenState extends State<FormScreen> {
 
   Widget _buildEmail() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Email'),
+      decoration: InputDecoration(
+          labelText: 'Email',
+          icon: Icon(Icons.mail_rounded, color: Colors.red[600])),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Le champs Email est obligatoire';
@@ -70,7 +72,9 @@ class _FormScreenState extends State<FormScreen> {
 
   Widget _buildMdp() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Mot de passe'),
+      decoration: InputDecoration(
+          labelText: 'Mot de passe',
+          icon: Icon(Icons.lock_rounded, color: Colors.red[600])),
       keyboardType: TextInputType.visiblePassword,
       obscureText: true,
       validator: (value) {
@@ -89,7 +93,9 @@ class _FormScreenState extends State<FormScreen> {
 
   Widget _buildMobile() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Mobile'),
+      decoration: InputDecoration(
+          labelText: 'Mobile',
+          icon: Icon(Icons.phone_android_rounded, color: Colors.red[600])),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Le champs Mobile est obligatoire';
@@ -106,7 +112,9 @@ class _FormScreenState extends State<FormScreen> {
 
   Widget _buildAdresse() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Adresse'),
+      decoration: InputDecoration(
+          labelText: 'Adresse',
+          icon: Icon(Icons.apartment_rounded, color: Colors.red[600])),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Le champs Adresse est obligatoire';
@@ -124,10 +132,9 @@ class _FormScreenState extends State<FormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
-          'Incendie',
-        ),
+        backgroundColor: Colors.red[600],
       ),
       body: Container(
         margin: EdgeInsets.fromLTRB(25, 10, 25, 10),
@@ -139,7 +146,9 @@ class _FormScreenState extends State<FormScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Image(
-                    image: AssetImage('assets/db.png'), height: 100, width: 50),
+                    image: AssetImage('assets/img.jpg'),
+                    height: 100,
+                    width: 60),
                 SizedBox(height: 20),
                 _buildEmail(),
                 _buildMdp(),
@@ -147,36 +156,36 @@ class _FormScreenState extends State<FormScreen> {
                 _buildAdresse(),
                 SizedBox(height: 30),
                 ElevatedButton(
-                  onPressed: () async {
-                    UserCredential response = await FormScreen();
-                    String id = (await FirebaseAuth.instance.currentUser)!
-                        .uid
-                        .toString();
-                    print("===================");
-                    if (response != null) {
-                      FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(id)
-                          .set({
-                        'email': _email,
-                        'mobile': _mobile,
-                        'adresse': _adresse
-                      });
-                      Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => new LoginScreen()));
-                    }
-                  },
-                  child: Text(
-                    'Créer un compte',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                    onPressed: () async {
+                      UserCredential response = await FormScreen();
+                      String id = (await FirebaseAuth.instance.currentUser)!
+                          .uid
+                          .toString();
+                      print("===================");
+                      if (response != null) {
+                        FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(id)
+                            .set({
+                          'email': _email,
+                          'mobile': _mobile,
+                          'adresse': _adresse
+                        });
+                        Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (context) => new LoginScreen()));
+                      }
+                    },
+                    child: Text(
+                      'Créer un compte',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ),
+                    style: ElevatedButton.styleFrom(primary: Colors.red[600])),
               ],
             ),
           ),

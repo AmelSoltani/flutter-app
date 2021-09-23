@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:proj/modif_inf.dart';
 import 'LoginScreen.dart';
-import 'Videosurveillance.dart';
 import 'Graph.dart';
 import 'Notifications.dart';
 import 'modif_inf.dart';
@@ -16,6 +15,7 @@ class Parametres extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.red[600],
         title: Text(
           'Paramètres',
         ),
@@ -26,19 +26,12 @@ class Parametres extends StatelessWidget {
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.red,
               ),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: Text('Vidéosurveillance'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => new VideoSurveillance()));
-                //Navigator.pop(context);
-              },
+              child: Text(
+                'Bonjour',
+                style: TextStyle(color: Colors.white, fontSize: 30),
+              ),
             ),
             ListTile(
               title: Text('Historique'),
@@ -81,13 +74,13 @@ class Parametres extends StatelessWidget {
             color: Colors.black,
           ),
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(32.0),
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             child: Column(
               children: <Widget>[
                 const SizedBox(height: 30.0),
                 ListTile(
                   title: Text(
-                    "modifier les information d'ultilisateur",
+                    "Modifier les information d'ultilisateur",
                     style: TextStyle(
                       color: Colors.black,
                     ),
@@ -105,27 +98,14 @@ class Parametres extends StatelessWidget {
                 ),
                 SwitchListTile(
                   title: Text(
-                    "Envoyer l'alert au cas d'incendie à l'utilisateur",
+                    "Envoyer une alerte à l'utilisateur",
                     style: TextStyle(
                       color: Colors.black,
                     ),
                   ),
+                  activeColor: Colors.red[600],
                   subtitle: Text(
                     "On",
-                    style: greyTExt,
-                  ),
-                  value: true,
-                  onChanged: (val) {},
-                ),
-                SwitchListTile(
-                  title: Text(
-                    "Envoyer l'alert au cas d'incendie à la police",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                  subtitle: Text(
-                    "Off",
                     style: greyTExt,
                   ),
                   value: false,
@@ -133,7 +113,7 @@ class Parametres extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text(
-                    "déconecter",
+                    "Déconnecter",
                     style: TextStyle(
                       color: Colors.black,
                     ),

@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:proj/Graph.dart';
 import 'package:proj/send_email.dart';
 import 'FormScreen.dart';
-import 'Videosurveillance.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 import 'loading.dart';
@@ -28,9 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
         await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: _email, password: _mdp);
         Navigator.push(
-            context,
-            new MaterialPageRoute(
-                builder: (context) => new VideoSurveillance()));
+            context, new MaterialPageRoute(builder: (context) => new Graph()));
 
         ///Navigator.of(context).pushReplacementNamed("homepage");
 
@@ -58,7 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildEmail() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Email'),
+      decoration: InputDecoration(
+          labelText: 'Email',
+          icon: Icon(Icons.mail_rounded, color: Colors.red[600])),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Le champs Email est obligatoire';
@@ -79,7 +79,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildMdp() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Mot de passe'),
+      decoration: InputDecoration(
+          labelText: 'Mot de passe',
+          icon: Icon(Icons.lock_rounded, color: Colors.red[600])),
       keyboardType: TextInputType.visiblePassword,
       obscureText: true,
       validator: (value) {
@@ -98,11 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Incendie',
-        ),
-      ),
+      backgroundColor: Colors.white,
       body: Container(
         margin: EdgeInsets.fromLTRB(25, 10, 25, 10),
         child: SingleChildScrollView(
@@ -112,8 +110,11 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                SizedBox(height: 70),
                 Image(
-                    image: AssetImage('assets/db.png'), height: 100, width: 50),
+                    image: AssetImage('assets/img.jpg'),
+                    height: 100,
+                    width: 60),
                 SizedBox(height: 20),
                 _buildEmail(),
                 _buildMdp(),
@@ -151,6 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  style: ElevatedButton.styleFrom(primary: Colors.red[600]),
                 ),
                 SizedBox(height: 10),
                 Text(
@@ -177,6 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  style: ElevatedButton.styleFrom(primary: Colors.red[600]),
                 ),
                 SizedBox(height: 10),
                 RichText(

@@ -12,11 +12,32 @@ class Modif extends StatefulWidget {
 class _ModifState extends State<Modif> {
   var _email, _mdp, _mobile, _adresse;
 
+  final user = FirebaseAuth.instance.currentUser;
+  final String uid = FirebaseAuth.instance.currentUser!.uid;
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  UpdatUser() async {
+    var formdata = _formKey.currentState;
+    if (formdata!.validate()) {
+      formdata.save();
+      await user!.updatePassword(_mdp);
+      await user!.updateEmail(_email);
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .update(
+            {'email': _email, 'mobile': _mobile, 'adresse': _adresse},
+          )
+          .then((value) => Navigator.push(context,
+              new MaterialPageRoute(builder: (context) => new LoginScreen())))
+          .catchError((error) => print("Failed to update user: $error"));
+    }
+  }
 
   Widget _buildEmail() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Email'),
+      decoration: InputDecoration(
+          labelText: 'Email',
+          icon: Icon(Icons.mail_rounded, color: Colors.red[600])),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Le champs Email est obligatoire';
@@ -38,7 +59,9 @@ class _ModifState extends State<Modif> {
 
   Widget _buildMdp() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Mot de passe'),
+      decoration: InputDecoration(
+          labelText: 'Mot de passe',
+          icon: Icon(Icons.lock_rounded, color: Colors.red[600])),
       keyboardType: TextInputType.visiblePassword,
       obscureText: true,
       validator: (value) {
@@ -57,7 +80,9 @@ class _ModifState extends State<Modif> {
 
   Widget _buildMobile() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Mobile'),
+      decoration: InputDecoration(
+          labelText: 'Mobile',
+          icon: Icon(Icons.phone_android_rounded, color: Colors.red[600])),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Le champs Mobile est obligatoire';
@@ -74,7 +99,9 @@ class _ModifState extends State<Modif> {
 
   Widget _buildAdresse() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Adresse'),
+      decoration: InputDecoration(
+          labelText: 'Adresse',
+          icon: Icon(Icons.apartment_rounded, color: Colors.red[600])),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Le champs Adresse est obligatoire';
@@ -93,9 +120,7 @@ class _ModifState extends State<Modif> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Incendie',
-        ),
+        backgroundColor: Colors.red[600],
       ),
       body: Container(
         margin: EdgeInsets.fromLTRB(25, 10, 25, 10),
@@ -116,23 +141,7 @@ class _ModifState extends State<Modif> {
                 SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () async {
-                    await FirebaseAuth.instance.currentUser!
-                        .updatePassword(_mdp);
-                    await FirebaseAuth.instance.currentUser!
-                        .updateEmail(_email);
-                    String uid = await FirebaseAuth.instance.currentUser!.uid;
-                    await FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(uid)
-                        .update({
-                      'email': _email,
-                      'mobile': _mobile,
-                      'adresse': _adresse
-                    });
-                    Navigator.push(
-                        context,
-                        new MaterialPageRoute(
-                            builder: (context) => new LoginScreen()));
+                    await UpdatUser();
                   },
                   child: Text(
                     'Modifier',
@@ -142,6 +151,7 @@ class _ModifState extends State<Modif> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  style: ElevatedButton.styleFrom(primary: Colors.red[600]),
                 ),
               ],
             ),

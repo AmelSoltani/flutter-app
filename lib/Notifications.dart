@@ -1,9 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'Parametres.dart';
 import 'Graph.dart';
-import 'Videosurveillance.dart';
 import 'notif.dart';
 
 class Notifications extends StatefulWidget {
@@ -28,6 +25,7 @@ class _NotificationsState extends State<Notifications> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.red[600],
           title: Text(
             'Notifications',
           ),
@@ -38,19 +36,10 @@ class _NotificationsState extends State<Notifications> {
             children: [
               const DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Colors.red,
                 ),
-                child: Text('Drawer Header'),
-              ),
-              ListTile(
-                title: Text('Vidéosurveillance'),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => new VideoSurveillance()));
-                  //Navigator.pop(context);
-                },
+                child: Text('Bonjour',
+                    style: TextStyle(color: Colors.white, fontSize: 30)),
               ),
               ListTile(
                 title: Text('Historique'),

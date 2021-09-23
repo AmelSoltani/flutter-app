@@ -49,7 +49,7 @@ class _send_emailState extends State<send_email> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Incendie'),
+        backgroundColor: Colors.red[600],
       ),
       body: Container(
         margin: EdgeInsets.all(25),
@@ -95,20 +95,22 @@ class _send_emailState extends State<send_email> {
                     ),
                     SizedBox(height: 20),
                     ElevatedButton(
-                        onPressed: () async {
-                          if (!_formKey.currentState!.validate()) {
-                            return;
-                          }
-                          _formKey.currentState!.save();
-                          await resetPassword(_emailController.value.text);
-                        },
-                        child: Text(
-                          'envoyer',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ))
+                      onPressed: () async {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
+                        _formKey.currentState!.save();
+                        await resetPassword(_emailController.value.text);
+                      },
+                      child: Text(
+                        'Envoyer',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(primary: Colors.red[600]),
+                    )
                   ],
                 ),
               )

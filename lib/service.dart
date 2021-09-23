@@ -71,23 +71,25 @@ class _NotifState extends State<Notif> {
       Navigator.of(context).pushNamed("Notifications");
     });
 
-    getUser();
+    getCurrentUID();
     super.initState();
+  }
+
+  Future<String> getCurrentUID() async {
+    final String id = (await FirebaseAuth.instance.currentUser)!.uid.toString();
+    return id;
   }
 
   saveDeviceToken() async {
     // Get the current user
-    User? user = await FirebaseAuth.instance.currentUser;
+    // User? user = await FirebaseAuth.instance.currentUser;
     // Get the token for this device
     String? fcmToken = await fbm.getToken();
-
+    final String uid = await getCurrentUID();
     // Save it to Firestore
     if (fcmToken != null) {
-      var tokens = _db
-          .collection('users')
-          .doc('temp')
-          .collection('tokens')
-          .doc(fcmToken);
+      var tokens =
+          _db.collection('users').doc(uid).collection('tokens').doc(fcmToken);
 
       await tokens.set({
         'token': fcmToken,
@@ -98,6 +100,7 @@ class _NotifState extends State<Notif> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
     throw UnimplementedError();
   }
 }

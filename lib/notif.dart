@@ -27,8 +27,11 @@ class _UserInformationState extends State<UserInformation> {
       Expanded(
           child: Column(
         children: [
+          SizedBox(
+            height: 15,
+          ),
           Text(
-            'Alerte  :',
+            'Alerte :',
             style: TextStyle(fontSize: 18),
           ),
           SizedBox(height: 10),
@@ -51,7 +54,6 @@ class _UserInformationState extends State<UserInformation> {
             ],
           ),
           SizedBox(height: 30),
-          ElevatedButton(onPressed: () {}, child: Text('Enregistrement')),
           Divider(
             color: Colors.black,
             thickness: 1,
